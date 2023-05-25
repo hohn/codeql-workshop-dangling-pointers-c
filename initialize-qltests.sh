@@ -1,18 +1,16 @@
 #!/bin/sh
 
-# This script copies Exercise#.c files from the
-# tests-common directory to the appropriate sub-directories
-# in the  solutions-tests and exercises-tests QLTest directories.
+# This script copies Exercise#.c files to the appropriate sub-directories
 [[ $(git rev-parse --show-toplevel) == $(pwd) ]] || {
     echo "This script must be run from the root of the workshop repository."
     exit 1
 }
 
-SRCDIR=$(pwd)/tests-common
+SRCDIR=$(pwd)/tests/common
 
 target_dirs=(
-    $(pwd)/solutions-tests
-    $(pwd)/exercises-tests
+    $(pwd)/tests/solutions
+    $(pwd)/tests/exercises
 )
 
 for dir in "${target_dirs[@]}"; do

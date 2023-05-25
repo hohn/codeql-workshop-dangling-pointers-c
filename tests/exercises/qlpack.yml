@@ -1,6 +1,6 @@
 ---
 library: false
-name: exercises-tests
+name: tests-exercises
 version: 0.0.1
 dependencies:
   "exercises": "*"
