@@ -1,0 +1,65 @@
+#!/bin/bash -e
+usage="$0 from.ql to
+
+Create 
+
+    src/solutions
+    ├── Exercise1.ql
+
+and 
+
+    tests/solutions/Exercise1
+    ├── Exercise1.expected
+    ├── Exercise1.qlref
+    └── test.c
+
+from
+
+    src/solutions/Current.ql
+
+Example:
+$0 Example2
+"
+
+name=$1
+from=src/solutions/Current.ql
+testd="tests/solutions/$name"
+testc=tests/common/test.c
+
+if [ $# -ne 1 ]; then
+    echo "$usage"
+    exit 1
+fi
+
+if [ ! -d src/solutions ]; then
+    echo "Missing src/solutions directory"
+    echo "$usage"
+    exit 1
+fi
+
+if [ ! -d tests/solutions ]; then
+    echo "Missing tests/solutions directory"
+    echo "$usage"
+    exit 1
+fi
+
+if [ ! -f $from ] ; then
+    echo "Missing source query file $query (1st argument)"
+    echo "$usage"
+    exit 1
+fi
+
+if [ ! -f $testc ] ; then
+    echo "Missing test file $testc (1st argument)"
+    echo "$usage"
+    exit 1
+fi
+
+echo "Creating test directory $testd"
+mkdir -p "$testd"
+echo "no value" > $testd/$name.expected
+echo $name.ql > $testd/$name.qlref
+cp $testc $testd/test.c
+
+echo "Creating source file src/solutions/$name.ql"
+cp $from src/solutions/$name.ql
