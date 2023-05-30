@@ -1,6 +1,6 @@
 ---
 library: false
-name: solutions-tests
+name: tests-solutions
 version: 0.0.1
 dependencies:
   "solutions": "*"

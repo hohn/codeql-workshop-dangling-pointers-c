@@ -15,7 +15,6 @@ This workshop is based on [this write-up](https://github.com/advanced-security/c
 - If you have CodeQL on your PATH, build the database using `build-database.sh` and load the database with the VS Code CodeQL extension. 
   - Alternatively, you can download [this pre-built database](https://drive.google.com/file/d/1CvqvJwnIp332HZ5SWCS2pHVGyy5b1g8_/view?usp=share_link).
 - :exclamation:Important:exclamation:: Run `initialize-qltests.sh` to initialize the tests. Otherwise, you will not be able to run the QLTests (in `exercises-tests` and `solutions-tests`).
-
 ## Introduction
 A dangling pointer is a memory safety violation where the pointer does not point to a valid object.
 These dangling pointers are the result of not modifying the value of the pointer after the pointed to object is destructed or not properly initializing the pointer.
@@ -79,7 +78,7 @@ The simplified version will track 3 possible *points-to* values.
 
 ### Exercise 1
 
-In the first exercise we are going to model the entries of the *points-to* set that we are going to associated with pointers at locations in the program as well as the two possible `Invalid` value types: uninitialized and out of scope. 
+In the first exercise we are going to model the entries of the *points-to* set that we are going to associate with pointers at locations in the program as well as the two possible `Invalid` value types: uninitialized and out of scope. 
 
 #### Task 1
 Start by implementing the [algebraic datatype](https://codeql.github.com/docs/ql-language-reference/types/#algebraic-datatypes) `PSetEntry` that represents the possible entries of our *points-to* set with the three values listed above. A template has been provided.
@@ -157,3 +156,5 @@ Implement the class `DanglingPointerAccess` that finds uses of dangling points.
 
 #### Hint
 - You will need to use `TVariableOutOfScope`, but `TVariableOutOfScope` binds an `LocalVariable` to the specific `ControlFlowNode` at which it went out of scope; the `LocalVariable` and `ControlFlowNode` that the `PointerDereferenceExpr` references may be different. Therefore, use a ["don't-care expression"](https://codeql.github.com/docs/ql-language-reference/ql-language-specification/#don-t-care-expressions).
+
+

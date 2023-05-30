@@ -2,7 +2,13 @@
 	"folders": [
 		{
 			"path": "."
+		},
+		{
+			"name": "[cpp-dangling-pointer-database source archive]",
+			"uri": "codeql-zip-archive://0-91/Users/hohn/local/codeql-workshop-dangling-pointers-c/cpp-dangling-pointer-database/src.zip"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"codeQL.runningQueries.autoSave": true
+	}
 }
