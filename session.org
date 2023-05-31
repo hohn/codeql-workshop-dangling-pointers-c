@@ -303,6 +303,20 @@
     #+INCLUDE: "./tests/solutions/Example70/Example70.expected" :lines "-6"’
 
 
+** Exercise 8.0 -- continue pointsToMap   
+   XX:
+
+   Check if the points-to set for lv at location contains a PSetVar(otherVariable)
+   to determine if otherVariable is still in scope.
+   1. If it is not in scope, then replace that entry with invalid/out of scope. 
+   2. If it is in scope, then keep the entry as is.
+
+*** Solution
+    #+INCLUDE: "./src/solutions/Example80.ql" src java
+
+*** First 5 results
+    #+INCLUDE: "./tests/solutions/Example80/Example80.expected" :lines "-6"’
+
 ** Exercise 2
    :PROPERTIES:
    :CUSTOM_ID: exercise-2
