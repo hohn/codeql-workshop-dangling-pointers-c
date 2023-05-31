@@ -235,8 +235,9 @@
     that implements the =toString()= predicate.
 
 *** Query
-    Write a simple query to show where variables to out of scope, 
+    Write a simple query to show where variables go out of scope, 
     : select cfn, "Variable $@ goes out of scope here.", lv, lv.getName()
+    Ignore the =TUninitialized= case for now.
 
 *** Solution
     #+INCLUDE: "./src/solutions/Example40.ql" src java
@@ -247,98 +248,15 @@
 
     
 
-** Exercise 1
-   :PROPERTIES:
-   :CUSTOM_ID: exercise-1
-   :END:
-   In the first exercise we are going to model the entries of the
-   /points-to/ set that we are going to associate with pointers at
-   locations in the program.
-
-   Note that to be able to represent the /invalid/ value we need to
-   implement another /algebraic datatype/ for the two possible values. You
-   can use the following definition. Besides the =newtype= we define a
-   =class= that extends from the /algebraic datatype/. This is a
-   [[https://codeql.github.com/docs/ql-language-reference/types/#standard-pattern-for-using-algebraic-datatypes][standard pattern]] that allows us to associate a convenient =toString= member
-   predicate that we will use to print the invalid reason.
-
-   A derived class is also required to use the new types in a =select= statement.
-
-   #+begin_src ql
-newtype TInvalidReason =
-  TUninitialized(DeclStmt ds, LocalVariable lv) { ds.getADeclaration() = lv } or
-  TVariableOutOfScope(LocalVariable lv, ControlFlowNode cfn) { goesOutOfScope(lv, cfn) }
-
-class InvalidReason extends TInvalidReason {
-  string toString() {
-    exists(DeclStmt ds, LocalVariable lv |
-      this = TUninitialized(ds, lv) and
-      result = "variable " + lv.getName() + " is unitialized."
-    )
-    or
-    exists(LocalVariable lv, ControlFlowNode cfn |
-      this = TVariableOutOfScope(lv, n) and
-      result = "variable " + lv.getName() + " went out of scope."
-    )
-  }
-}
-   #+end_src
-
-   Implement the
-   [[https://codeql.github.com/docs/ql-language-reference/types/#algebraic-datatypes][algebraic
-   datatype]] =PSetEntry= that represents the possible entries of our
-   /points-to/ set with the three values listed above.
-
-   The type =TInvalidReason= creates a user-defined type with values that
-   are neither /primitive/ values nor /entities/ for database. Each of two
-   values represent an invalid /points-to/ value. The case when a pointer
-   is not initialized or pointing to a pointer that is out of scope.
-
-   The =TVariableOutOfScope= branch associates a new value of the branch
-   type to the pair =(LocalVariable, ControlFlowNode)= if the local
-   variable goes out of scope at that point in the program. The predicate
-   =goesOutOfScope= has the following definition that you can use.
-
-   #+begin_src ql
-predicate goesOutOfScope(LocalVariable lv, ControlFlowNode cfn) {
-  exists(BlockStmt scope |
-    scope = lv.getParentScope() and
-    if exists(scope.getFollowingStmt()) 
-    then scope.getFollowingStmt() = cfn 
-    else cfn = scope
-  )
-}
-   #+end_src
-
+** Exercise 5.0
+   Add the =getLocation()= predicates to
+   : class InvalidReason
+   so the results show a location.
 *** Solution
-    :PROPERTIES:
-    :CUSTOM_ID: solution
-    :END:
-    Like the =TInvalidReason= type we model the =TPSetEntry= type as
-    follows.
+    #+INCLUDE: "./src/solutions/Example50.ql" src java
 
-    #+begin_src ql
-newtype TPSetEntry =
-  PSetVar(LocalVariable lv) or
-  PSetInvalid(InvalidReason ir) or
-  PSetUnknown()
-
-class PSetEntry extends TPSetEntry {
-  string toString() {
-    exists(LocalVariable lv |
-      this = PSetVar(lv) and
-      result = "Var(" + lv.toString() + ")"
-    )
-    or
-    this = PSetUnknown() and result = "Unknown"
-    or
-    exists(InvalidReason ir |
-      this = PSetInvalid(ir) and
-      result = "Invalid because " + ir.toString()
-    )
-  }
-}
-    #+end_src
+*** First 5 results
+    #+INCLUDE: "./tests/solutions/Example50/Example50.expected" :lines "-6"’
 
 ** Exercise 2
    :PROPERTIES:
@@ -412,7 +330,7 @@ PSEntry getAnAssignedPSetEntry(ControlFlowNode cfn, LocalVariable lv) {
     :PROPERTIES:
     :CUSTOM_ID: solution-1
     :END:
-    The local variable =lv= get assigned a /points-to/ entry when it is
+    The local variable =lv= gets assigned a /points-to/ entry when it is
     declared or assigned a value.
 
     #+begin_src ql
