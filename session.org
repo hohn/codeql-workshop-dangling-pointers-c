@@ -317,6 +317,11 @@
 *** First 5 results
     #+INCLUDE: "./tests/solutions/Example80/Example80.expected" :lines "-6"’
 
+** Exercise 9.0 
+   XX:
+
+   Examine pointsToMap results and summarize
+
 ** Exercise 2
    :PROPERTIES:
    :CUSTOM_ID: exercise-2
