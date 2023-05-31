@@ -261,16 +261,14 @@
 ** Exercise 6.0 -- start pointsToMap
    XX:
 
-   In this predicate we must consider three cases:
-
-   1. The local variable =lv= is assigned a value at location =cfn= that
-      defines the /points-to/ set entry =pse=.
-   2. The local local variable =lv= is not assigned so we have to propagate
-      the /points-to/ set entry from a previous location.
+   In this predicate we consider the three cases
+   1. At a location, the point-set entry is defined for a local variable.
+   2. At a location, the point-set entry is not defined for a local variable, so
+      get it from a previous location.
    3. The local variable =lv= is not assigned, but points to a variable
-      that went out of scope at location =cfn= so we need to invalid the
+      that went out of scope at location =cfn= so we need to invalidate the
       entry for that variable.
-
+    
    Start on the predicate
    : pointsToMap
    to handle the first two cases, using helper predicates
@@ -278,6 +276,8 @@
    and
    : getADefinedPointsToEntry(location, lv)
       
+   The third case will be added later.
+
 *** Solution
     #+INCLUDE: "./src/solutions/Example60.ql" src java
 
@@ -306,6 +306,7 @@
    Check if the points-to set for lv at location contains a PSetVar(otherVariable)
    to determine if otherVariable is still in scope.
    1. If it is not in scope, then replace that entry with invalid/out of scope. 
+      This is the third case mentioned previously.
    2. If it is in scope, then keep the entry as is.
 
 *** Solution
