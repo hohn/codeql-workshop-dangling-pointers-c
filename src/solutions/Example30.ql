@@ -1,41 +1,13 @@
-/**
- * @name Local variable goes out of scope
- * @description A local variable goes out of scope.
- * @kind problem
- */
-
 import cpp
 
-from PSetEntry pse, InvalidReason reason, LocalVariable lv, ControlFlowNode cfn
-where
-  pse = PSetInvalid(reason) and
-  reason = TVariableOutOfScope(lv, cfn)
-select cfn, "Variable $@ goes out of scope here.", lv, lv.getName()
+// TVariableOutOfScope
+from LocalVariable lv, ControlFlowNode cfn
+where goesOutOfScope(lv, cfn)
+select lv
 
 newtype TInvalidReason =
   TUninitialized(DeclStmt ds, LocalVariable lv) { ds.getADeclaration() = lv } or
   TVariableOutOfScope(LocalVariable lv, ControlFlowNode cfn) { goesOutOfScope(lv, cfn) }
-
-private newtype TPSetEntry =
-  PSetVar(LocalVariable lv) or
-  PSetInvalid(InvalidReason ir) or
-  PSetUnknown()
-
-class PSetEntry extends TPSetEntry {
-  string toString() {
-    exists(LocalVariable lv |
-      this = PSetVar(lv) and
-      result = "Var(" + lv.toString() + ")"
-    )
-    or
-    this = PSetUnknown() and result = "Unknown"
-    or
-    exists(InvalidReason ir |
-      this = PSetInvalid(ir) and
-      result = "Invalid because " + ir.toString()
-    )
-  }
-}
 
 /**
  * Get the scope that `lv` exits from.

@@ -1,0 +1,4 @@
+WARNING: Unused class InvalidReason (/Users/hohn/local/codeql-workshop-dangling-pointers-c/src/solutions/Example30.ql:22,7-20)
+| test.c:4:10:4:10 | p |
+| test.c:6:11:6:11 | s |
+| test.c:10:9:10:9 | s |
