@@ -258,6 +258,34 @@
 *** First 5 results
     #+INCLUDE: "./tests/solutions/Example50/Example50.expected" :lines "-6"’
 
+
+** Exercise 6.0 -- start pointsToMap
+   XX:
+
+   In this predicate we must consider three cases:
+
+   1. The local variable =lv= is assigned a value at location =cfn= that
+      defines the /points-to/ set entry =pse=.
+   2. The local local variable =lv= is not assigned so we have to propagate
+      the /points-to/ set entry from a previous location.
+   3. The local variable =lv= is not assigned, but points to a variable
+      that went out of scope at location =cfn= so we need to invalid the
+      entry for that variable.
+
+   Start on the predicate
+   : pointsToMap
+   to handle the first two cases, using helper predicates
+   : isPointsToEntryDefined
+   and
+   : getADefinedPointsToEntry(location, lv)
+      
+*** Solution
+    #+INCLUDE: "./src/solutions/Example60.ql" src java
+
+*** First 5 results
+    #+INCLUDE: "./tests/solutions/Example60/Example60.expected" :lines "-6"’
+
+
 ** Exercise 2
    :PROPERTIES:
    :CUSTOM_ID: exercise-2
