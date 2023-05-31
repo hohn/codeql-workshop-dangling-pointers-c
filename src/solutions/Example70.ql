@@ -52,7 +52,7 @@ PSetEntry getADefinedPointsToEntry(ControlFlowNode location, LocalVariable lv) {
       va.getTarget().(LocalScopeVariable).getType() instanceof PointerType and
       // pointsToMap(assign.getAPredecessor(), va.getTarget(), result)
       result = PSetVar(va.getTarget())
-      )
+    )
     or
     // Other cases => unknown
     not assign instanceof AddressOfExpr and

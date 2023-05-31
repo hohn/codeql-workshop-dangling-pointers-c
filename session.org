@@ -286,6 +286,23 @@
     #+INCLUDE: "./tests/solutions/Example60/Example60.expected" :lines "-6"’
 
 
+** Exercise 7.0 -- cases for getADefinedPointsToEntry
+   XX:
+   #+BEGIN_SRC text
+     // p = &other;
+
+     // p = otherPointer
+
+     // Other cases => unknown
+   #+END_SRC
+
+*** Solution
+    #+INCLUDE: "./src/solutions/Example70.ql" src java
+
+*** First 5 results
+    #+INCLUDE: "./tests/solutions/Example70/Example70.expected" :lines "-6"’
+
+
 ** Exercise 2
    :PROPERTIES:
    :CUSTOM_ID: exercise-2
