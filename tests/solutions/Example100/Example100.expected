@@ -1,0 +1,2 @@
+| test.c:9:16:9:17 | * ... | Invalid because variable s went out of scope. |
+| test.c:12:16:12:17 | * ... | Var(s) |

@@ -120,6 +120,13 @@
     }
   #+end_src
 
+  At the end, we want to find dereferences of uninitialized pointers by querying
+  the points-to map.  This query will be trivial; all the effort is in predicates
+  and classes.  We will get a relation
+  : predicate pointsToMap(ControlFlowNode location, LocalVariable lv, PSetEntry pse) 
+  that for a =location= and a local variable =lv= will give us information via a
+  point-set entry value =pse=.
+
 ** Algebraic data types
    ADTs give us dynamic typing, just like unions in C:
    #+BEGIN_SRC c++
@@ -146,7 +153,6 @@
          TFloat(float) or
          TInt(int)
    #+END_SRC
-
 
 ** Summary
    The simplified version of the lifetime profile will track 3 possible /points-to/
@@ -179,7 +185,6 @@
 *** First 5 results
     #+INCLUDE: "./tests/solutions/Example10/Example10.expected" :lines "-6"’
 
-
 ** Exercise 2.0
    Define the out-of-scope case
    :  TVariableOutOfScope(LocalVariable lv, ControlFlowNode cfn) { }
@@ -194,7 +199,6 @@
 *** First 5 results
     #+INCLUDE: "./tests/solutions/Example20/Example20.expected" :lines "-6"’
 
-
 ** Exercise 3.0
    Define a class =InvalidReason= to handle the printing of the =TInvalidReason=
    ADT.
@@ -204,7 +208,6 @@
 
 *** First 5 results
     #+INCLUDE: "./tests/solutions/Example30/Example30.expected" :lines "-6"’
-
 
 ** Exercise 4.0
 *** ADT
@@ -245,9 +248,6 @@
 *** First 5 results
     #+INCLUDE: "./tests/solutions/Example40/Example40.expected" :lines "-6"’
 
-
-    
-
 ** Exercise 5.0
    Add the =getLocation()= predicates to
    : class InvalidReason
@@ -257,7 +257,6 @@
 
 *** First 5 results
     #+INCLUDE: "./tests/solutions/Example50/Example50.expected" :lines "-6"’
-
 
 ** Exercise 6.0 -- start pointsToMap
    XX:
@@ -285,7 +284,6 @@
 *** First 5 results
     #+INCLUDE: "./tests/solutions/Example60/Example60.expected" :lines "-6"’
 
-
 ** Exercise 7.0 -- cases for getADefinedPointsToEntry
    XX:
    #+BEGIN_SRC text
@@ -301,7 +299,6 @@
 
 *** First 5 results
     #+INCLUDE: "./tests/solutions/Example70/Example70.expected" :lines "-6"’
-
 
 ** Exercise 8.0 -- continue pointsToMap   
    XX:
@@ -321,6 +318,18 @@
    XX:
 
    Examine pointsToMap results and summarize
+
+** Exercise 10.0
+   XX:
+
+   Find dereferences of uninitialized pointers by querying the points-to map.
+   This query will be trivial; all the effort is in predicates and classes.
+
+*** Solution
+    #+INCLUDE: "./src/solutions/Example100.ql" src java
+
+*** First 5 results
+    #+INCLUDE: "./tests/solutions/Example100/Example100.expected" :lines "-6"’
 
 ** Exercise 2
    :PROPERTIES:
